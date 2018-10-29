@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/combatMove.wav</SourceFile>
-  <SourceTime>2018-10-29T15:22:56.8459722+01:00</SourceTime>
-  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/bin/DesktopGL/Content/combatMove.xnb</DestFile>
-  <DestTime>2018-10-29T15:25:45.2325994+01:00</DestTime>
+  <SourceFile>C:/Users/Marcin/ChaosMONO/Chaos/Chaos/Content/combatMove.wav</SourceFile>
+  <SourceTime>2018-10-29T20:00:24.902132+01:00</SourceTime>
+  <DestFile>C:/Users/Marcin/ChaosMONO/Chaos/Chaos/Content/bin/DesktopGL/Content/combatMove.xnb</DestFile>
+  <DestTime>2018-10-29T20:03:37.7622941+01:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2018-09-23T23:55:52+02:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using Chaos.Engine;
+using Chaos.Models;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
@@ -16,6 +19,7 @@ namespace Chaos
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Gameboard gb;
+        private GameboardActionHandler handler;
         
         public Game1()
         {
@@ -33,7 +37,6 @@ namespace Chaos
         {
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
-
             base.Initialize();
         }
 
@@ -47,7 +50,7 @@ namespace Chaos
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gb = new Gameboard(GraphicsDevice, spriteBatch, Content);
             gb.GenerateEmptyGameboard();
-
+            handler = new GameboardActionHandler(gb);
             // TODO: use this.Content to load your game content here
         }
 
@@ -72,34 +75,35 @@ namespace Chaos
                 GetContent(Mouse.GetState().Position);
             }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+//            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 
-                // TODO: Add your update logic here
-
-                base.Update(gameTime);
+         //       base.Update(gameTime);
         }
 
         private void GetContent(Point point)
         {
-            // 528x528
-            if (point.X <= 576 && point.Y < 576)
+            // 576x576
+            if (PointBetweenValues(point, 0, 576))
             {
                 var tile = gb.GetTile(point);
-                if (tile.Occupant == null)
-                {
-                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Empty: {tile.IsEmpty}");
-                }
+                handler.Action(tile);
+//                if (tile.Occupant == null)
+//                {
+//                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Empty: {tile.IsEmpty}");
+//                }
 
-                else
-                {
-                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Occupant: {tile.Occupant.Name}");
-                }
+//                else
+//                {
+//                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Occupant: {tile.Occupant.Name}");
+//                }
 
                 return;
             }
+        }
 
-            MessageBox.Show($"Clicked outside.");
-
+        private bool PointBetweenValues(Point point, int minVal, int maxVal)
+        {
+            return point.X >= minVal && point.Y >= minVal && point.X <= maxVal && point.Y <= maxVal;
         }
 
         /// <summary>

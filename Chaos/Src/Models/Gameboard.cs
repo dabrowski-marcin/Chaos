@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Threading;
+using Chaos.Src.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
-namespace Chaos.Src.Models
+namespace Chaos.Models
 {
-    public class Gameboard
+    public class Gameboard : IGameboard
     {
         private GraphicsDevice device;
         private SpriteBatch spriteBatch;
+
         private ContentManager content;
         public Gameboard(GraphicsDevice device, SpriteBatch spriteBatch, ContentManager contentManager)
         {
@@ -29,12 +32,12 @@ namespace Chaos.Src.Models
 
                     Tileset[width, height] = new Tile();
                     Tileset[width, height].Position = new Point(width * 48, height * 48);
-                    Tileset[width, height].IsEmpty = true;
                     Tileset[width, height].Texture = content.Load<Texture2D>("void");
                 }
             }
 
             PlaceWizard();
+            Thread.Sleep(100);
             PlaceWizard();
         }
 
@@ -43,13 +46,33 @@ namespace Chaos.Src.Models
             var randX = new Random().Next(0, 10);
             var randY = new Random().Next(0, 10);
 
-            var pos = new Point(randY, randX);
-            Tileset[pos.Y, pos.X].Texture = content.Load<Texture2D>("Wizard1");
-            Tileset[pos.Y, pos.X].Occupant = new Creature
+            var pos = new Point(randX, randY);
+            Tileset[pos.X, pos.Y].Texture = content.Load<Texture2D>("Wizard1");
+            Tileset[pos.X, pos.Y].Occupant = new Creature
             {
                 Name = $"TestWizard {randX} / {randY}"
             };
 
+        }
+
+        public void GenerateVoidTile(Point point)
+        {
+            Tileset[point.X / 48, point.Y / 48] = new Tile();
+            Tileset[point.X / 48, point.Y / 48].Texture = content.Load<Texture2D>("void");
+        }
+
+        public void Move(Point start, Point end)
+        {
+            var startX = start.X / 48;
+            var startY = start.Y / 48;
+
+            var endX = end.X / 48;
+            var endY = end.Y / 48;
+
+            Tileset[endX, endY].Occupant = Tileset[startX, startY].Occupant;
+            Tileset[endX, endY].Texture = Tileset[startX, startY].Texture;
+            Tileset[startX, startY].Occupant = null;
+            Tileset[startX, startY].Texture = content.Load<Texture2D>("void");
         }
 
         public Tile GetTile(Point pt)

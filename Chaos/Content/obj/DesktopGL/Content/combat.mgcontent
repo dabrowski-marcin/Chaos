@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Combat.png</SourceFile>
-  <SourceTime>2018-10-29T15:22:53.7150324+01:00</SourceTime>
-  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/bin/DesktopGL/Content/Combat.xnb</DestFile>
-  <DestTime>2018-10-29T15:57:06.1605126+01:00</DestTime>
+  <SourceFile>C:/Users/Marcin/ChaosMONO/Chaos/Chaos/Content/Combat.png</SourceFile>
+  <SourceTime>2018-10-29T20:00:24.8361164+01:00</SourceTime>
+  <DestFile>C:/Users/Marcin/ChaosMONO/Chaos/Chaos/Content/bin/DesktopGL/Content/Combat.xnb</DestFile>
+  <DestTime>2018-10-29T21:43:16.8883892+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-23T23:55:52+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

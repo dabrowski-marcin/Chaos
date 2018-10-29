@@ -5,7 +5,7 @@ namespace Chaos.Src.Models
 {
     public class Tile
     {
-        public readonly Point Size = new Point(48,48);
+        public readonly Point Size = new Point(48, 48);
         public Point Position { get; set; }
 
         public Rectangle Rectangle
@@ -15,6 +15,10 @@ namespace Chaos.Src.Models
 
         public Texture2D Texture { get; set; }
         public Creature Occupant { get; set; }
-        public bool IsEmpty { get; set; }
+
+        public bool IsEmpty
+        {
+            get { return Occupant == null; }
+        }
     }
 }
