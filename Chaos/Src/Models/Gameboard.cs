@@ -1,27 +1,22 @@
-﻿using System;
-using System.Threading;
-using Chaos.Src.Models;
+﻿using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Chaos.Models
 {
     public class Gameboard : IGameboard
     {
-        private GraphicsDevice device;
-        private SpriteBatch spriteBatch;
-
-        private ContentManager content;
-        public Gameboard(GraphicsDevice device, SpriteBatch spriteBatch, ContentManager contentManager)
+        public Gameboard()
         {
-            this.device = device;
-            this.spriteBatch = spriteBatch;
-            this.content = contentManager;
         }
         public const int GAMEBOARD_WIDTH = 12;
         public const int GAMEBOARD_HEIGHT = 12;
-        public Tile[,] Tileset = new Tile[GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT];
+        private Tile[,] _tileset = new Tile[GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT];
+
+        public Tile[,] Tileset
+        {
+            get { return _tileset; }
+        }
 
         public void GenerateEmptyGameboard()
         {
@@ -30,14 +25,12 @@ namespace Chaos.Models
                 for (int height = 0; height < GAMEBOARD_HEIGHT; height++)
                 {
 
-                    Tileset[width, height] = new Tile();
-                    Tileset[width, height].Position = new Point(width * 48, height * 48);
-                    Tileset[width, height].Texture = content.Load<Texture2D>("void");
+                    _tileset[width, height] = new Tile();
+                    _tileset[width, height].Position = new Point(width * 48, height * 48);
                 }
             }
 
             PlaceWizard();
-            Thread.Sleep(100);
             PlaceWizard();
         }
 
@@ -47,18 +40,16 @@ namespace Chaos.Models
             var randY = new Random().Next(0, 10);
 
             var pos = new Point(randX, randY);
-            Tileset[pos.X, pos.Y].Texture = content.Load<Texture2D>("Wizard1");
-            Tileset[pos.X, pos.Y].Occupant = new Creature
+            _tileset[pos.X, pos.Y].Occupant = new Creature
             {
-                Name = $"TestWizard {randX} / {randY}"
+                Name = $"Wizard1"
             };
 
         }
 
         public void GenerateVoidTile(Point point)
         {
-            Tileset[point.X / 48, point.Y / 48] = new Tile();
-            Tileset[point.X / 48, point.Y / 48].Texture = content.Load<Texture2D>("void");
+            _tileset[point.X / 48, point.Y / 48] = new Tile();
         }
 
         public void Move(Point start, Point end)
@@ -69,15 +60,13 @@ namespace Chaos.Models
             var endX = end.X / 48;
             var endY = end.Y / 48;
 
-            Tileset[endX, endY].Occupant = Tileset[startX, startY].Occupant;
-            Tileset[endX, endY].Texture = Tileset[startX, startY].Texture;
-            Tileset[startX, startY].Occupant = null;
-            Tileset[startX, startY].Texture = content.Load<Texture2D>("void");
+            _tileset[endX, endY].Occupant = _tileset[startX, startY].Occupant;
+            _tileset[startX, startY].Occupant = null;
         }
 
         public Tile GetTile(Point pt)
         {
-            return Tileset[pt.X / 48, pt.Y / 48];
+            return _tileset[pt.X / 48, pt.Y / 48];
         }
     }
 }

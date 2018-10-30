@@ -2,7 +2,7 @@
 
 namespace Chaos.Src.Models
 {
-    public class Creature : Entity
+    public class Creature
     {
         public Player Owner { get; set; }
 

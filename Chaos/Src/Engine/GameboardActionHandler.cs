@@ -1,16 +1,13 @@
-﻿using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
-using System.Windows.Forms;
-using Chaos.Models;
+﻿using Chaos.Models;
+using Chaos.Src.Engine;
 using Chaos.Src.Models;
+using Microsoft.Xna.Framework;
 
 namespace Chaos.Engine
 {
-    public class GameboardActionHandler
+    public class GameboardActionHandler : IGameboardActionHandler
     {
-        public Tile SourceTile { get; set; }
-        public Tile TargetTile { get; set; }
-
+        public Tile SelectedTile { get; set; }
         private IGameboard gameboard;
 
         public GameboardActionHandler(IGameboard gameboard)
@@ -18,27 +15,27 @@ namespace Chaos.Engine
             this.gameboard = gameboard;
         }
 
-        public void Action(Tile clickedTile)
+        public void Action(Tile target)
         {
-            if (SourceTile == null)
+            if (SelectedTile == null)
             {
-                if (CheckIfVoidOrInvalidClicked(clickedTile))
+                if (CheckIfVoidOrInvalidClicked(target))
                 {
                     return;
                 }
 
-                SourceTile = clickedTile;
+                SelectedTile = target;
                 return;
             }
 
-            switch (CheckOutcome(clickedTile))
+            switch (CheckOutcome(target))
             {
                 case GameboardAction.Movement:
-                    gameboard.Move(SourceTile.Position, clickedTile.Position);
+                    gameboard.Move(SelectedTile.Position, target.Position);
                     break;
             }
 
-            SourceTile = null;
+            SelectedTile = null;
         }
 
         public bool CheckIfVoidOrInvalidClicked(Tile clickedTile)
@@ -58,10 +55,36 @@ namespace Chaos.Engine
             return result;
         }
 
-        private void Clear()
+        public void Update()
         {
-            SourceTile = null;
-           // TargetTile = null;
+            if (InputHandler.Released)
+            {
+                var point = InputHandler.Position;
+                // 576x576
+                if (PointBetweenValues(point.ToPoint(), 0, 576))
+                {
+                    var tile = gameboard.GetTile(point.ToPoint());
+                    Action(tile);
+                    return;
+                }
+            }
+        }
+
+//        public List<Tile> FindLegalMoves(Tile sourceTile)
+//        {
+//            var ListOfMoves = new List<Tile>();
+//
+//            foreach (var tile in gameboard.Tileset)
+//            {
+//
+//            }
+//        }
+
+
+        private bool PointBetweenValues(Point point, int minVal, int maxVal)
+        {
+            return point.X >= minVal && point.Y >= minVal && point.X <= maxVal && point.Y <= maxVal;
+
         }
     }
 }

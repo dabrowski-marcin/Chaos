@@ -5,6 +5,7 @@ namespace Chaos.Models
 {
     public interface IGameboard
     {
+        Tile[,] Tileset { get; }
         void GenerateEmptyGameboard();
         void GenerateVoidTile(Point point);
         Tile GetTile(Point pt);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Chaos.Src.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Chaos.Src.Models
@@ -13,12 +14,21 @@ namespace Chaos.Src.Models
             get { return new Rectangle(Position, Size); }
         }
 
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture
+        {
+            get { return StaticManager.ContentManager.Load<Texture2D>(Name); }
+        }
+
         public Creature Occupant { get; set; }
 
         public bool IsEmpty
         {
             get { return Occupant == null; }
+        }
+
+        public string Name
+        {
+            get { return IsEmpty ? "void" : Occupant.Name; }
         }
     }
 }

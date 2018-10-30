@@ -1,13 +1,10 @@
-﻿using Chaos.Src.Models;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
+﻿using Autofac;
 using Chaos.Engine;
 using Chaos.Models;
-using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Chaos.Src.Engine;
+using Chaos.Src.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Chaos
 {
@@ -18,13 +15,14 @@ namespace Chaos
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Gameboard gb;
-        private GameboardActionHandler handler;
+        private IGameboard gameboard;
+        private IGameboardActionHandler handler;
         
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            StaticManager.ContentManager = Content;
         }
 
         /// <summary>
@@ -48,10 +46,10 @@ namespace Chaos
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            gb = new Gameboard(GraphicsDevice, spriteBatch, Content);
-            gb.GenerateEmptyGameboard();
-            handler = new GameboardActionHandler(gb);
-            // TODO: use this.Content to load your game content here
+            gameboard = ServiceContainer.Container.Resolve<IGameboard>();
+            gameboard.GenerateEmptyGameboard();
+
+            handler = ServiceContainer.Container.Resolve<IGameboardActionHandler>();
         }
 
         /// <summary>
@@ -70,40 +68,9 @@ namespace Chaos
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                GetContent(Mouse.GetState().Position);
-            }
-
-//            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-
-         //       base.Update(gameTime);
-        }
-
-        private void GetContent(Point point)
-        {
-            // 576x576
-            if (PointBetweenValues(point, 0, 576))
-            {
-                var tile = gb.GetTile(point);
-                handler.Action(tile);
-//                if (tile.Occupant == null)
-//                {
-//                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Empty: {tile.IsEmpty}");
-//                }
-
-//                else
-//                {
-//                    MessageBox.Show($"Tile: {tile.Position.X} / {tile.Position.Y} Occupant: {tile.Occupant.Name}");
-//                }
-
-                return;
-            }
-        }
-
-        private bool PointBetweenValues(Point point, int minVal, int maxVal)
-        {
-            return point.X >= minVal && point.Y >= minVal && point.X <= maxVal && point.Y <= maxVal;
+            InputHandler.Update(this, graphics);
+            handler.Update();
+            base.Update(gameTime);
         }
 
         /// <summary>
@@ -120,7 +87,7 @@ namespace Chaos
 
 
             // TODO: Add your drawing code here
-            foreach (var tile in gb.Tileset)
+            foreach (var tile in gameboard.Tileset)
             {
                 spriteBatch.Begin();
                 var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
