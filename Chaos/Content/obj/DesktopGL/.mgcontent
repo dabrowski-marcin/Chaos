@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Armor.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Bat.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Birdy.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Boost.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Boosting.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/BrownBear.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Casting.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Click.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Cobra.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/combat.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Combat.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Combat.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/CombatMovement.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/CombatSpell.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Crocodile.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Damage.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Debuff.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Dot.bmp</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Eagle.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/end turn.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Fireball.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Goblin.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/GoldenDraon.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/GreenDragon.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Griffon.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Horse.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/InvalidTarget.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/move.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Nothing.bmp</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Orc.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/output_kwoJ4W.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Pegasus.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Question_mark.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Rat.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/red-letter-d-512.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Selection.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/SingleCast.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Skeleton.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Slow.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Speed.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/SpeedUp.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Square.bmp</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Unicorn.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Update.wav</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/void.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Wizard1.gif</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Wizard2.png</File>
+    <File>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Wizard3.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

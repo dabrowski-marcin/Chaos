@@ -28,7 +28,7 @@ namespace Chaos.Src.Models
 
         public string Name
         {
-            get { return IsEmpty ? "void" : Occupant.Name; }
+            get { return IsEmpty ? "nothing" : Occupant.Name; }
         }
     }
 }

@@ -38,6 +38,7 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -45,19 +46,32 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\AI\Node.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Src\AI\PriorityQueue.cs" />
     <Compile Include="Src\AI\Pathfinding.cs" />
+    <Compile Include="Src\Engine\CreatureActionHandler.cs" />
     <Compile Include="Src\Engine\GameboardAction.cs" />
     <Compile Include="Src\Engine\GameboardActionHandler.cs" />
     <Compile Include="Src\Engine\IGameboardActionHandler.cs" />
+    <Compile Include="Src\Engine\Phase.cs" />
     <Compile Include="Src\Engine\ServiceContainer.cs" />
+    <Compile Include="Src\Engine\SoundPlayer.cs" />
+    <Compile Include="Src\Engine\SpellboardAction.cs" />
     <Compile Include="Src\Helpers\StaticManager.cs" />
     <Compile Include="Src\Models\Creature.cs" />
     <Compile Include="Src\Models\Gameboard.cs" />
     <Compile Include="Src\Models\IGameboard.cs" />
     <Compile Include="Src\Engine\InputHandler.cs" />
+    <Compile Include="Src\Models\ISpellboard.cs" />
     <Compile Include="Src\Models\Player.cs" />
     <Compile Include="Src\Models\SpecialAttribute.cs" />
+    <Compile Include="Src\Models\Spell.cs" />
+    <Compile Include="Src\Models\Spellboard.cs" />
+    <Compile Include="Src\Models\SpellTile.cs" />
     <Compile Include="Src\Models\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +89,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\x86\SDL2.dll">
       <Link>x86\SDL2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -123,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
+    <Content Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

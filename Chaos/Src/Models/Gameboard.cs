@@ -34,6 +34,7 @@ namespace Chaos.Models
             PlaceWizard();
         }
 
+        // TODO: Remove
         public void PlaceWizard()
         {
             var randX = new Random().Next(0, 10);
@@ -42,7 +43,8 @@ namespace Chaos.Models
             var pos = new Point(randX, randY);
             _tileset[pos.X, pos.Y].Occupant = new Creature
             {
-                Name = $"Wizard1"
+                Name = $"Pegasus",
+                CurrentMovement = 2
             };
 
         }

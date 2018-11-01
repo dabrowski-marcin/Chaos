@@ -10,29 +10,40 @@ namespace Chaos.Engine
         public Tile SelectedTile { get; set; }
         private IGameboard gameboard;
 
+        private bool _isInMoveMode = false;
+
         public GameboardActionHandler(IGameboard gameboard)
         {
             this.gameboard = gameboard;
         }
 
-        public void Action(Tile target)
+        public void Action(Tile targetTile)
         {
             if (SelectedTile == null)
             {
-                if (CheckIfVoidOrInvalidClicked(target))
+                if (CheckIfVoidOrInvalidClicked(targetTile))
                 {
                     return;
                 }
 
-                SelectedTile = target;
+                SoundPlayer.PlaySound(SoundType.Click);
+                SelectedTile = targetTile;
                 return;
             }
 
-            switch (CheckOutcome(target))
+            switch (CheckActionOutcome(targetTile))
             {
                 case GameboardAction.Movement:
-                    gameboard.Move(SelectedTile.Position, target.Position);
+                    if (CreatureActionHandler.Move(SelectedTile.Occupant))
+                    {
+                        gameboard.Move(SelectedTile.Position, targetTile.Position);
+                        SoundPlayer.PlaySound(SoundType.Step);
+                        SelectedTile = targetTile;
+
+                        return;
+                    }
                     break;
+
             }
 
             SelectedTile = null;
@@ -43,7 +54,7 @@ namespace Chaos.Engine
             return (clickedTile == null || clickedTile.IsEmpty);
         }
 
-        public GameboardAction CheckOutcome(Tile clickedTile)
+        public GameboardAction CheckActionOutcome(Tile clickedTile)
         {
             var result = GameboardAction.None;
 
@@ -55,36 +66,42 @@ namespace Chaos.Engine
             return result;
         }
 
+
         public void Update()
         {
-            if (InputHandler.Released)
+            if (InputHandler.LeftButtonReleased)
             {
                 var point = InputHandler.Position;
+
                 // 576x576
-                if (PointBetweenValues(point.ToPoint(), 0, 576))
+                if (CheckPartClicked(point.ToPoint(), 0, 576))
                 {
                     var tile = gameboard.GetTile(point.ToPoint());
                     Action(tile);
                     return;
                 }
             }
+
+            if (InputHandler.LeftButtonReleased)
+            {
+                SelectedTile = null;
+            }
         }
 
-//        public List<Tile> FindLegalMoves(Tile sourceTile)
-//        {
-//            var ListOfMoves = new List<Tile>();
-//
-//            foreach (var tile in gameboard.Tileset)
-//            {
-//
-//            }
-//        }
+        private Point GameboardBorder = new Point(s);
 
-
-        private bool PointBetweenValues(Point point, int minVal, int maxVal)
+        private bool CheckPartClicked(Point point, int minVal, int maxVal)
         {
             return point.X >= minVal && point.Y >= minVal && point.X <= maxVal && point.Y <= maxVal;
 
+        }
+
+        private enum ScreenPartClicked
+        {
+            Gameboard,
+            Spellboard,
+            InformationButton,
+            EndTurnButton
         }
     }
 }

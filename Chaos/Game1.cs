@@ -3,6 +3,7 @@ using Chaos.Engine;
 using Chaos.Models;
 using Chaos.Src.Engine;
 using Chaos.Src.Helpers;
+using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,6 +17,7 @@ namespace Chaos
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private IGameboard gameboard;
+        private ISpellboard spellboard;
         private IGameboardActionHandler handler;
         
         public Game1()
@@ -47,7 +49,9 @@ namespace Chaos
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameboard = ServiceContainer.Container.Resolve<IGameboard>();
+            spellboard = ServiceContainer.Container.Resolve<ISpellboard>();
             gameboard.GenerateEmptyGameboard();
+            spellboard.GenerateEmptySpellboard();
 
             handler = ServiceContainer.Container.Resolve<IGameboardActionHandler>();
         }
@@ -79,8 +83,8 @@ namespace Chaos
         /// <param name="gameTime">Provides a snapshot of timing values.</param>\
         protected override void Draw(GameTime gameTime)
         {
-            graphics.PreferredBackBufferWidth = 1024;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 768;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 800;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
             graphics.ApplyChanges();
             
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -88,6 +92,14 @@ namespace Chaos
 
             // TODO: Add your drawing code here
             foreach (var tile in gameboard.Tileset)
+            {
+                spriteBatch.Begin();
+                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
+                spriteBatch.Draw(tile.Texture, position);
+                spriteBatch.End();
+            }
+
+            foreach (var tile in spellboard.SpellTileset)
             {
                 spriteBatch.Begin();
                 var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);

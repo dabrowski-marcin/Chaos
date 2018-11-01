@@ -10,8 +10,10 @@ namespace Chaos.Src.Engine
             get { return position; }
         }
 
-        static public bool Released { get; private set; }
-        static public bool Pressed { get; private set; }
+        static public bool LeftButtonReleased { get; private set; }
+        static public bool LeftButtonPressed { get; private set; }
+        static public bool RightButtonPressed { get; private set; }
+        static public bool RightButtonReleased { get; private set; }
         static private Vector2 position;
         static private MouseState PreviousMouseState;
         static private KeyboardState PreviousKeyboardState;
@@ -22,8 +24,10 @@ namespace Chaos.Src.Engine
         static public void Update(Game game, GraphicsDeviceManager graphics)
         {
             // Reset old states
-            Pressed = false;
-            Released = false;
+            LeftButtonPressed = false;
+            LeftButtonReleased = false;
+            RightButtonPressed = false;
+            RightButtonReleased = false;
 
             // Get new states
             KeyboardState currentKeyboardState = Keyboard.GetState();
@@ -33,10 +37,16 @@ namespace Chaos.Src.Engine
             position = new Vector2(currentMouseState.X, currentMouseState.Y);
             // Pressed
             if (currentMouseState.LeftButton == ButtonState.Pressed)
-                Pressed = true;
+                LeftButtonPressed = true;
             // Released
             else if (PreviousMouseState.LeftButton == ButtonState.Pressed)
-                Released = true;
+                LeftButtonReleased = true;
+
+            if (currentMouseState.RightButton == ButtonState.Pressed)
+                RightButtonPressed = true;
+            // Released
+            else if (PreviousMouseState.RightButton == ButtonState.Pressed)
+                RightButtonReleased = true;
             // Esc - exit game
             if (currentKeyboardState.IsKeyDown(Keys.Escape))
                 game.Exit();

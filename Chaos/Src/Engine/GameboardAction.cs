@@ -5,6 +5,8 @@
         None,
         Movement,
         Combat,
-        Mount
+        Mount,
+        Spellcast,
+        Duplication
     }
 }
