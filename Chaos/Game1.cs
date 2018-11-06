@@ -77,6 +77,44 @@ namespace Chaos
             base.Update(gameTime);
         }
 
+        private void DrawScreenElements()
+        {
+            DrawGameboard();
+            DrawSpellBoard();
+            DrawEndTurnButton();
+        }
+
+        private void DrawGameboard()
+        {
+            foreach (var tile in gameboard.Tileset)
+            {
+                spriteBatch.Begin();
+                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
+                spriteBatch.Draw(tile.Texture, position);
+                spriteBatch.End();
+            }
+        }
+
+        private void DrawSpellBoard()
+        {
+            foreach (var tile in spellboard.SpellTileset)
+            {
+                spriteBatch.Begin();
+                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
+                spriteBatch.Draw(tile.Texture, position);
+                spriteBatch.End();
+            }
+        }
+
+        private void DrawEndTurnButton()
+        {
+            spriteBatch.Begin();
+            var rectangle = new Rectangle(new Point(578, 528), new Point(48, 96));
+            var position = new Vector2(rectangle.Left, rectangle.Top);
+            spriteBatch.Draw(StaticManager.ContentManager.Load<Texture2D>("endturn"), position);
+            spriteBatch.End();
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -87,25 +125,10 @@ namespace Chaos
             graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
             graphics.ApplyChanges();
             
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkOrchid);
 
-
-            // TODO: Add your drawing code here
-            foreach (var tile in gameboard.Tileset)
-            {
-                spriteBatch.Begin();
-                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
-                spriteBatch.Draw(tile.Texture, position);
-                spriteBatch.End();
-            }
-
-            foreach (var tile in spellboard.SpellTileset)
-            {
-                spriteBatch.Begin();
-                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
-                spriteBatch.Draw(tile.Texture, position);
-                spriteBatch.End();
-            }
+            DrawScreenElements();
+            DrawEndTurnButton();
 
             base.Draw(gameTime);
         }

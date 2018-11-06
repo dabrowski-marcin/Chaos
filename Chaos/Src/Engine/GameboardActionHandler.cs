@@ -1,4 +1,9 @@
-﻿using Chaos.Models;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows.Forms;
+using Chaos.Models;
 using Chaos.Src.Engine;
 using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
@@ -9,12 +14,15 @@ namespace Chaos.Engine
     {
         public Tile SelectedTile { get; set; }
         private IGameboard gameboard;
-
+        private List<ScreenPartCoordinates> _screenParts = new List<ScreenPartCoordinates>();
+        
         private bool _isInMoveMode = false;
 
         public GameboardActionHandler(IGameboard gameboard)
         {
             this.gameboard = gameboard;
+            _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Gameboard, new Point(0, 0), new Point(575, 575)));               
+            _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Spellboard, new Point(578, 0), new Point(672, 528)));              
         }
 
         public void Action(Tile targetTile)
@@ -43,7 +51,6 @@ namespace Chaos.Engine
                         return;
                     }
                     break;
-
             }
 
             SelectedTile = null;
@@ -74,11 +81,21 @@ namespace Chaos.Engine
                 var point = InputHandler.Position;
 
                 // 576x576
-                if (CheckPartClicked(point.ToPoint(), 0, 576))
+                switch (GetClickedScreenPart(point.ToPoint()))
                 {
-                    var tile = gameboard.GetTile(point.ToPoint());
-                    Action(tile);
-                    return;
+                    case ScreenPart.Gameboard:
+                    {
+                        var tile = gameboard.GetTile(point.ToPoint());
+                        Action(tile);
+                        return;
+                    }
+
+                    case ScreenPart.Spellboard:
+                        MessageBox.Show("Spellboard nigga!");
+                        break;
+
+                    case ScreenPart.Undefined:
+                        break;
                 }
             }
 
@@ -88,20 +105,17 @@ namespace Chaos.Engine
             }
         }
 
-        private Point GameboardBorder = new Point(s);
+
+        public ScreenPart GetClickedScreenPart(Point positionClicked)
+        {
+            var screenCoordinates = _screenParts.FirstOrDefault(x => x.Intersects(positionClicked));
+            return screenCoordinates?.ScreenPart ?? ScreenPart.Undefined;
+        }
 
         private bool CheckPartClicked(Point point, int minVal, int maxVal)
         {
             return point.X >= minVal && point.Y >= minVal && point.X <= maxVal && point.Y <= maxVal;
 
-        }
-
-        private enum ScreenPartClicked
-        {
-            Gameboard,
-            Spellboard,
-            InformationButton,
-            EndTurnButton
         }
     }
 }
