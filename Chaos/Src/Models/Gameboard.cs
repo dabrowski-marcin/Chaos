@@ -1,4 +1,5 @@
-﻿using Chaos.Src.Models;
+﻿using Chaos.Engine;
+using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -30,12 +31,12 @@ namespace Chaos.Models
                 }
             }
 
-            PlaceWizard();
-            PlaceWizard();
+            PlaceWizard(0);
+            PlaceWizard(2);
         }
 
         // TODO: Remove
-        public void PlaceWizard()
+        public void PlaceWizard(int id)
         {
             var randX = new Random().Next(0, 10);
             var randY = new Random().Next(0, 10);
@@ -44,7 +45,8 @@ namespace Chaos.Models
             _tileset[pos.X, pos.Y].Occupant = new Creature
             {
                 Name = $"Pegasus",
-                CurrentMovement = 2
+                CurrentMovement = 2,
+                Owner = PhaseHandler.ActivePlayers[id]
             };
 
         }

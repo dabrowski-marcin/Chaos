@@ -6,6 +6,7 @@ using Chaos.Src.Helpers;
 using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Chaos
 {
@@ -18,7 +19,8 @@ namespace Chaos
         SpriteBatch spriteBatch;
         private IGameboard gameboard;
         private ISpellboard spellboard;
-        private IGameboardActionHandler handler;
+
+        private IGameEventHandler gameEventHandler;
         
         public Game1()
         {
@@ -46,6 +48,14 @@ namespace Chaos
         /// </summary>
         protected override void LoadContent()
         {
+            List<Player> tempPlayers = new List<Player>();
+            tempPlayers.Add(new Player { Index = 0, IsDead = false, IsHuman = true, Name = "player1", Points = 0 });
+            tempPlayers.Add(new Player { Index = 1, IsDead = true, IsHuman = true, Name = "player2", Points = 0 });
+            tempPlayers.Add(new Player { Index = 2, IsDead = false, IsHuman = true, Name = "player3", Points = 0 });
+
+            PhaseHandler.ActivePlayers = tempPlayers;
+            PhaseHandler.CurrentPlayer = tempPlayers[0];
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameboard = ServiceContainer.Container.Resolve<IGameboard>();
@@ -53,7 +63,8 @@ namespace Chaos
             gameboard.GenerateEmptyGameboard();
             spellboard.GenerateEmptySpellboard();
 
-            handler = ServiceContainer.Container.Resolve<IGameboardActionHandler>();
+
+            gameEventHandler = ServiceContainer.Container.Resolve<IGameEventHandler>();
         }
 
         /// <summary>
@@ -73,7 +84,7 @@ namespace Chaos
         protected override void Update(GameTime gameTime)
         {
             InputHandler.Update(this, graphics);
-            handler.Update();
+            gameEventHandler.Update();
             base.Update(gameTime);
         }
 
@@ -97,12 +108,15 @@ namespace Chaos
 
         private void DrawSpellBoard()
         {
-            foreach (var tile in spellboard.SpellTileset)
+            if (PhaseHandler.GamePhase == Phase.Spellcasting)
             {
-                spriteBatch.Begin();
-                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
-                spriteBatch.Draw(tile.Texture, position);
-                spriteBatch.End();
+                foreach (var tile in spellboard.SpellTileset)
+                {
+                    spriteBatch.Begin();
+                    var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
+                    spriteBatch.Draw(tile.Texture, position);
+                    spriteBatch.End();
+                }
             }
         }
 

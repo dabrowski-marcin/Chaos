@@ -2,8 +2,8 @@
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/Orc.gif</SourceFile>
   <SourceTime>2018-10-29T15:22:55.2180043+01:00</SourceTime>
-  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/bin/DesktopGL/Orc.xnb</DestFile>
-  <DestTime>2018-10-31T15:09:53.1109127+01:00</DestTime>
+  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/bin/DesktopGL/AnyCPU/Debug/Content/Orc.xnb</DestFile>
+  <DestTime>2018-11-06T13:32:21.114955+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-23T23:55:52+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -2,10 +2,10 @@
 
 namespace Chaos.Engine
 {
-    public interface IGameboardActionHandler
+    public interface IGameboardHandler
     {
         Tile SelectedTile { get; set; }
-        void Action(Tile targetTile);
+        void MovementAction(Tile targetTile);
         bool CheckIfVoidOrInvalidClicked(Tile clickedTile);
         GameboardAction CheckActionOutcome(Tile clickedTile);
         void Update();

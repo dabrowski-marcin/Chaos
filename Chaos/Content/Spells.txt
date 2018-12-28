@@ -1,6 +1,6 @@
-Lion 1 0
-Skeleton 1 0
-Wraith 1 0
+﻿Lion 1 35 0
+Skeleton 1 45 0
+Wraith 1 10 0
 Gryphon 1 0
 Unicorn 1 0
 Cobra 1 0

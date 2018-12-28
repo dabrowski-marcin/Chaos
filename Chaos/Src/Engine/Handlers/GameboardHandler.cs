@@ -1,59 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows.Forms;
+﻿using Chaos.Engine;
 using Chaos.Models;
-using Chaos.Src.Engine;
 using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
-namespace Chaos.Engine
+namespace Chaos.Src.Engine.Handlers
 {
-    public class GameboardActionHandler : IGameboardActionHandler
+    public class GameboardHandler : IGameboardHandler
     {
         public Tile SelectedTile { get; set; }
         private IGameboard gameboard;
         private List<ScreenPartCoordinates> _screenParts = new List<ScreenPartCoordinates>();
         
-        private bool _isInMoveMode = false;
+//        private bool _isInMoveMode = false;
 
-        public GameboardActionHandler(IGameboard gameboard)
+        public GameboardHandler(IGameboard gameboard)
         {
             this.gameboard = gameboard;
             _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Gameboard, new Point(0, 0), new Point(575, 575)));               
             _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Spellboard, new Point(578, 0), new Point(672, 528)));              
         }
 
-        public void Action(Tile targetTile)
+        private bool cpito(Tile targetTile)
         {
-            if (SelectedTile == null)
+            return targetTile.Occupant != null && targetTile.Occupant.Owner == PhaseHandler.CurrentPlayer;
+        }
+        public void MovementAction(Tile targetTile)
+        {
+            if (PhaseHandler.GamePhase == Phase.Movement)
             {
-                if (CheckIfVoidOrInvalidClicked(targetTile))
+                if (SelectedTile == null)
                 {
+                    if (CheckIfVoidOrInvalidClicked(targetTile) || !cpito(targetTile))
+                    {
+                        return;
+                    }
+
+                    SoundPlayer.PlaySound(SoundType.Click);
+                    SelectedTile = targetTile;
                     return;
                 }
 
-                SoundPlayer.PlaySound(SoundType.Click);
-                SelectedTile = targetTile;
-                return;
+                switch (CheckActionOutcome(targetTile))
+                {
+                    case GameboardAction.Movement:
+                        if (CreatureActionHandler.Move(SelectedTile.Occupant))
+                        {
+                            gameboard.Move(SelectedTile.Position, targetTile.Position);
+                            SoundPlayer.PlaySound(SoundType.Step);
+                            SelectedTile = targetTile;
+
+                            return;
+                        }
+
+                        break;
+                }
+
+                SelectedTile = null;
             }
-
-            switch (CheckActionOutcome(targetTile))
-            {
-                case GameboardAction.Movement:
-                    if (CreatureActionHandler.Move(SelectedTile.Occupant))
-                    {
-                        gameboard.Move(SelectedTile.Position, targetTile.Position);
-                        SoundPlayer.PlaySound(SoundType.Step);
-                        SelectedTile = targetTile;
-
-                        return;
-                    }
-                    break;
-            }
-
-            SelectedTile = null;
         }
 
         public bool CheckIfVoidOrInvalidClicked(Tile clickedTile)
@@ -86,7 +92,7 @@ namespace Chaos.Engine
                     case ScreenPart.Gameboard:
                     {
                         var tile = gameboard.GetTile(point.ToPoint());
-                        Action(tile);
+                        MovementAction(tile);
                         return;
                     }
 

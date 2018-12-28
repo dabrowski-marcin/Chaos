@@ -53,10 +53,14 @@
     </Compile>
     <Compile Include="Src\AI\PriorityQueue.cs" />
     <Compile Include="Src\AI\Pathfinding.cs" />
+    <Compile Include="Src\Engine\Handlers\ButtonsHandler.cs" />
     <Compile Include="Src\Engine\CreatureActionHandler.cs" />
     <Compile Include="Src\Engine\GameboardAction.cs" />
-    <Compile Include="Src\Engine\GameboardActionHandler.cs" />
-    <Compile Include="Src\Engine\IGameboardActionHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\GameboardHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\GameEventHandler.cs" />
+    <Compile Include="Src\Engine\IButtonsHandler.cs" />
+    <Compile Include="Src\Engine\IGameboardHandler.cs" />
+    <Compile Include="Src\Engine\IGameEventHandler.cs" />
     <Compile Include="Src\Engine\Phase.cs" />
     <Compile Include="Src\Engine\PhaseHandler.cs" />
     <Compile Include="Src\Engine\ServiceContainer.cs" />
@@ -149,6 +153,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Spells.txt" />
     <Content Include="Content\void.png" />
     <Content Include="Content\Wizard.png" />
   </ItemGroup>

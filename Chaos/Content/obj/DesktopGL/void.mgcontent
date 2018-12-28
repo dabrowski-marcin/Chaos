@@ -2,8 +2,8 @@
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/void.png</SourceFile>
   <SourceTime>2018-10-29T11:45:43.1285295+01:00</SourceTime>
-  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/Content/bin/DesktopGL/void.xnb</DestFile>
-  <DestTime>2018-10-31T15:09:58.1068309+01:00</DestTime>
+  <DestFile>C:/Users/marcindx/source/repos/Chaos/Chaos/bin/DesktopGL/AnyCPU/Debug/Content/void.xnb</DestFile>
+  <DestTime>2018-11-06T13:32:33.9082519+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-23T23:55:52+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
