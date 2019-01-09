@@ -2,63 +2,67 @@
 using Chaos.Src.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Chaos.Src.Engine.Handlers;
+using Chaos.Src.Helpers;
+using NLog;
 
 namespace Chaos.Engine
 {
     public static class PhaseHandler
     {
-        public static List<Player> ActivePlayers = new List<Player>();
+        private static readonly Logger Log = LoggerController.Phase;
         public static Player CurrentPlayer;
         public static Phase GamePhase;
 
         public static void ChangeTurn()
         {
-            Debug.WriteLine($"Current phase: {GamePhase.ToString()}");
-            Debug.WriteLine($"Current player: {CurrentPlayer.Name}");
-
             if (CurrentPlayer == GetLastActivePlayer())
             {
                 ChangePhase();
                 CurrentPlayer = ChangeActivePlayer();
-                Debug.WriteLine($"Post-change phase: {GamePhase.ToString()}");
-                Debug.WriteLine($"Post-change player: {CurrentPlayer.Name}");
                 return;
             }
 
             CurrentPlayer = ChangeActivePlayer();
-            Debug.WriteLine($"Post-change player: {CurrentPlayer.Name}");
         }
 
         private static Player ChangeActivePlayer()
         {
-
-            var livingPlayers = ActivePlayers.FindAll(x => !x.IsDead);
+            Player activePlayer;
+            var livingPlayers = StateGlobals.Players.FindAll(x => !x.IsDead);
 
             if (GetLastActivePlayer() == CurrentPlayer)
             {
-                return livingPlayers[0];
+                activePlayer = livingPlayers[0];
+            }
+            else
+            {
+                var nextPlayer = livingPlayers.IndexOf(CurrentPlayer);
+                activePlayer = livingPlayers[++nextPlayer];
             }
 
-            var nextPlayer = livingPlayers.IndexOf(CurrentPlayer);
-
-            return livingPlayers[++nextPlayer];
+            Log.Debug($"Changed player to: {activePlayer.Name}.");
+            return activePlayer;
         }
 
         private static Player GetLastActivePlayer()
         {
-            var livingPlayers = ActivePlayers.FindAll(x => !x.IsDead);
-            return livingPlayers[livingPlayers.Count - 1];
+            var livingPlayers = StateGlobals.Players.FindAll(x => !x.IsDead);
+            var player = livingPlayers[livingPlayers.Count - 1];
+            return player;
         }
 
         public static void ChangePhase()
         {
             if (GamePhase == Phase.Independent)
             {
-                GamePhase = Phase.Spellcasting;
+                GamePhase = Phase.SpellPicking;
+                Log.Debug($"Changed phase to: {GamePhase}");
                 return;
             }
 
             GamePhase++;
+            Log.Debug($"Changed phase to: {GamePhase}");
         }
     }
 }

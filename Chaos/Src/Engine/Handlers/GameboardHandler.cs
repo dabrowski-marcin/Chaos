@@ -5,25 +5,26 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Chaos.Src.Helpers;
+using NLog;
 
 namespace Chaos.Src.Engine.Handlers
 {
     public class GameboardHandler : IGameboardHandler
     {
-        public Tile SelectedTile { get; set; }
-        private IGameboard gameboard;
-        private List<ScreenPartCoordinates> _screenParts = new List<ScreenPartCoordinates>();
-        
-//        private bool _isInMoveMode = false;
+        private static readonly Logger Log = LoggerController.Gameboard;
 
-        public GameboardHandler(IGameboard gameboard)
+        public Tile SelectedTile { get; set; }
+        private readonly IGameboard gameboard;
+        private readonly ISpellboard spellboard;        
+
+        public GameboardHandler(IGameboard gameboard, ISpellboard spellboard)
         {
             this.gameboard = gameboard;
-            _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Gameboard, new Point(0, 0), new Point(575, 575)));               
-            _screenParts.Add(new ScreenPartCoordinates(ScreenPart.Spellboard, new Point(578, 0), new Point(672, 528)));              
+            this.spellboard = spellboard;
         }
 
-        private bool cpito(Tile targetTile)
+        private bool IsCurrentPlayerOwner(Tile targetTile)
         {
             return targetTile.Occupant != null && targetTile.Occupant.Owner == PhaseHandler.CurrentPlayer;
         }
@@ -33,7 +34,7 @@ namespace Chaos.Src.Engine.Handlers
             {
                 if (SelectedTile == null)
                 {
-                    if (CheckIfVoidOrInvalidClicked(targetTile) || !cpito(targetTile))
+                    if (CheckIfVoidOrInvalidClicked(targetTile) || !IsCurrentPlayerOwner(targetTile))
                     {
                         return;
                     }
@@ -48,6 +49,7 @@ namespace Chaos.Src.Engine.Handlers
                     case GameboardAction.Movement:
                         if (CreatureActionHandler.Move(SelectedTile.Occupant))
                         {
+                            Log.Debug($"Moving {SelectedTile.Occupant.Name} from tile POS: {SelectedTile.Position} to tile POS: {targetTile.Position}");
                             gameboard.Move(SelectedTile.Position, targetTile.Position);
                             SoundPlayer.PlaySound(SoundType.Step);
                             SelectedTile = targetTile;
@@ -58,7 +60,7 @@ namespace Chaos.Src.Engine.Handlers
                         break;
                 }
 
-                SelectedTile = null;
+              //  SelectedTile = null;
             }
         }
 
@@ -85,9 +87,9 @@ namespace Chaos.Src.Engine.Handlers
             if (InputHandler.LeftButtonReleased)
             {
                 var point = InputHandler.Position;
-
+                var screenPart = ScreenManager.GetClickedScreenPart(point.ToPoint());
                 // 576x576
-                switch (GetClickedScreenPart(point.ToPoint()))
+                switch (screenPart)
                 {
                     case ScreenPart.Gameboard:
                     {
@@ -97,7 +99,6 @@ namespace Chaos.Src.Engine.Handlers
                     }
 
                     case ScreenPart.Spellboard:
-                        MessageBox.Show("Spellboard nigga!");
                         break;
 
                     case ScreenPart.Undefined:
@@ -105,17 +106,10 @@ namespace Chaos.Src.Engine.Handlers
                 }
             }
 
-            if (InputHandler.LeftButtonReleased)
+            if (InputHandler.RightButtonReleased)
             {
                 SelectedTile = null;
             }
-        }
-
-
-        public ScreenPart GetClickedScreenPart(Point positionClicked)
-        {
-            var screenCoordinates = _screenParts.FirstOrDefault(x => x.Intersects(positionClicked));
-            return screenCoordinates?.ScreenPart ?? ScreenPart.Undefined;
         }
 
         private bool CheckPartClicked(Point point, int minVal, int maxVal)

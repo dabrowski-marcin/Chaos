@@ -1,23 +1,18 @@
-﻿Lion 1 35 0
-Skeleton 1 45 0
-Wraith 1 10 0
-Gryphon 1 0
-Unicorn 1 0
-Cobra 1 0
-Pegasus 1 0
-Bat 1 0
-Rat 1 0
-Goblin 1 0
-Orc 1 0
-Bear 1 0
-Horse 1 0
-Crocodile 1 0
-Eagle 1 0
-Birdy 1 0
-GoldenDragon 1 0
-GreenDragon 1 0
-Anger 0 1 2 C
-Armor 0 1 3 H
-Speed 0 1 2 S
-Slow 0 1 -2 S
-Fireball 0 1 -4 H
+﻿Name,Power,Range,RequiresLoS,Chance,EffectChance,Type,SpellAnimationType
+Lion,0,1,true,30,0,Summoning,Casting
+Skeleton,0,1,true,45,0,Summoning,Casting
+Wraith,0,1,true,15,0,Summoning,Casting
+Griffon,0,1,true,55,0,Summoning,Casting
+Unicorn,0,1,true,20,0,Summoning,Casting
+Cobra,0,1,true,70,0,Summoning,Casting
+Bat,0,1,true,60,0,Summoning,Casting
+Rat,0,1,true,70,0,Summoning,Casting
+Goblin,0,1,true,55,0,Summoning,Casting
+Orc,0,1,true,55,0,Summoning,Casting
+BrownBear,0,1,true,50,0,Summoning,Casting
+Crocodile,0,1,true,50,0,Summoning,Casting
+Horse,0,1,true,50,0,Summoning,Casting
+Birdy,0,1,true,20,0,Summoning,Casting
+Eagle,0,1,true,45,0,Summoning,Casting
+Green Dragon,0,1,true,10,0,Summoning,Casting
+Golden Dragon,0,1,true,10,0,Summoning,Casting

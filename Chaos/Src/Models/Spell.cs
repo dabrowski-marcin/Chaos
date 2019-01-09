@@ -4,6 +4,7 @@
     {
         public int Id;
         public string Name;
+        public int Power;
         public int Range;
         public bool RequiresLoS;
         public decimal Chance;
@@ -23,6 +24,9 @@
 
     public enum SpellAnimationType
     {
+        None,
+        Casting,
+        Combat,
         Bolt,
         Lightning,
         Swirl,

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Chaos.Engine;
 using Chaos.Models;
 using Chaos.Src.Engine;
@@ -7,6 +8,8 @@ using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
+using Chaos.Src.Engine.Handlers;
 
 namespace Chaos
 {
@@ -21,6 +24,7 @@ namespace Chaos
         private ISpellboard spellboard;
 
         private IGameEventHandler gameEventHandler;
+        private IInfoStringHandler infoStringHandler;
         
         public Game1()
         {
@@ -53,8 +57,8 @@ namespace Chaos
             tempPlayers.Add(new Player { Index = 1, IsDead = true, IsHuman = true, Name = "player2", Points = 0 });
             tempPlayers.Add(new Player { Index = 2, IsDead = false, IsHuman = true, Name = "player3", Points = 0 });
 
-            PhaseHandler.ActivePlayers = tempPlayers;
-            PhaseHandler.CurrentPlayer = tempPlayers[0];
+            StateGlobals.Players = tempPlayers;
+            PhaseHandler.CurrentPlayer = StateGlobals.Players[0];
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -63,8 +67,11 @@ namespace Chaos
             gameboard.GenerateEmptyGameboard();
             spellboard.GenerateEmptySpellboard();
 
-
             gameEventHandler = ServiceContainer.Container.Resolve<IGameEventHandler>();
+            infoStringHandler = ServiceContainer.Container.Resolve<IInfoStringHandler>();
+
+            SpellsGenerator sg = new SpellsGenerator();
+            sg.GenerateSpells();
         }
 
         /// <summary>
@@ -83,33 +90,34 @@ namespace Chaos
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            StateGlobals.GameTime = gameTime;
             InputHandler.Update(this, graphics);
             gameEventHandler.Update();
             base.Update(gameTime);
         }
 
-        private void DrawScreenElements()
+        private void DrawScreenElements(GameTime gameTime)
         {
-            DrawGameboard();
+            DrawGameboard(gameTime);
             DrawSpellBoard();
             DrawEndTurnButton();
         }
 
-        private void DrawGameboard()
+        private void DrawGameboard(GameTime gameTime)
         {
             foreach (var tile in gameboard.Tileset)
             {
-                spriteBatch.Begin();
-                var position = new Vector2(tile.Rectangle.Left, tile.Rectangle.Top);
-                spriteBatch.Draw(tile.Texture, position);
-                spriteBatch.End();
+                tile.Animation?.Draw(spriteBatch);
+                tile.Animation?.Update(gameTime);
+                tile.Animate(gameTime);
             }
         }
 
         private void DrawSpellBoard()
         {
-            if (PhaseHandler.GamePhase == Phase.Spellcasting)
+            if (PhaseHandler.GamePhase == Phase.SpellPicking)
             {
+                spellboard.DrawPlayerSpells(PhaseHandler.CurrentPlayer);
                 foreach (var tile in spellboard.SpellTileset)
                 {
                     spriteBatch.Begin();
@@ -123,9 +131,9 @@ namespace Chaos
         private void DrawEndTurnButton()
         {
             spriteBatch.Begin();
-            var rectangle = new Rectangle(new Point(578, 528), new Point(48, 96));
+            var rectangle = new Rectangle(new Point(577, 528), new Point(47, 96));
             var position = new Vector2(rectangle.Left, rectangle.Top);
-            spriteBatch.Draw(StaticManager.ContentManager.Load<Texture2D>("endturn"), position);
+            spriteBatch.Draw(StaticManager.ContentManager.Load<Texture2D>("GUI/turn"), position);
             spriteBatch.End();
         }
 
@@ -136,13 +144,15 @@ namespace Chaos
         protected override void Draw(GameTime gameTime)
         {
             graphics.PreferredBackBufferWidth = 800;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferHeight = 615;   // set this value to the desired height of your window
             graphics.ApplyChanges();
             
             GraphicsDevice.Clear(Color.DarkOrchid);
 
-            DrawScreenElements();
+            DrawScreenElements(gameTime);
             DrawEndTurnButton();
+            infoStringHandler.UpdateFieldUnderCursorInformation(spriteBatch);
+            infoStringHandler.UpdateMovesLeftInformation(spriteBatch);
 
             base.Draw(gameTime);
         }

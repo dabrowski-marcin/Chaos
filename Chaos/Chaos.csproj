@@ -53,11 +53,19 @@
     </Compile>
     <Compile Include="Src\AI\PriorityQueue.cs" />
     <Compile Include="Src\AI\Pathfinding.cs" />
+    <Compile Include="Src\Engine\CreaturesGenerator.cs" />
     <Compile Include="Src\Engine\Handlers\ButtonsHandler.cs" />
     <Compile Include="Src\Engine\CreatureActionHandler.cs" />
     <Compile Include="Src\Engine\GameboardAction.cs" />
+    <Compile Include="Src\Engine\Handlers\EffectsHandler.cs" />
     <Compile Include="Src\Engine\Handlers\GameboardHandler.cs" />
     <Compile Include="Src\Engine\Handlers\GameEventHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\InfoStringHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\ScreenManager.cs" />
+    <Compile Include="Src\Engine\Handlers\SpellboardHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\ISpellboardHandler.cs" />
+    <Compile Include="Src\Engine\Handlers\Spellcasting.cs" />
+    <Compile Include="Src\Engine\Handlers\StateGlobals.cs" />
     <Compile Include="Src\Engine\IButtonsHandler.cs" />
     <Compile Include="Src\Engine\IGameboardHandler.cs" />
     <Compile Include="Src\Engine\IGameEventHandler.cs" />
@@ -65,7 +73,10 @@
     <Compile Include="Src\Engine\PhaseHandler.cs" />
     <Compile Include="Src\Engine\ServiceContainer.cs" />
     <Compile Include="Src\Engine\SoundPlayer.cs" />
-    <Compile Include="Src\Engine\SpellboardAction.cs" />
+    <Compile Include="Src\Engine\SpellsGenerator.cs" />
+    <Compile Include="Src\Graphics\Animation.cs" />
+    <Compile Include="Src\Graphics\SpriteManager.cs" />
+    <Compile Include="Src\Helpers\LoggerController.cs" />
     <Compile Include="Src\Helpers\StaticManager.cs" />
     <Compile Include="Src\Models\Creature.cs" />
     <Compile Include="Src\Models\ScreenPartCoordinates.cs" />
@@ -85,11 +96,23 @@
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.8.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\packages\LumenWorks.Framework.IO.3.8.0\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>

@@ -1,14 +1,18 @@
 ﻿using Chaos.Src.Helpers;
 using Microsoft.Xna.Framework.Audio;
+using NLog;
 
 namespace Chaos.Src.Engine
 {
     public static class SoundPlayer
     {
-        public static void PlaySound(SoundType sound)
+        private static readonly Logger Log = LoggerController.Sound;
+
+        public static void PlaySound(SoundType soundType)
         {
-            var snd = StaticManager.ContentManager.Load<SoundEffect>(sound.ToString());
-            snd.Play();
+            Log.Debug($"Playing {soundType}");
+            var sound = StaticManager.ContentManager.Load<SoundEffect>($"Sounds/{soundType.ToString()}");
+            sound.Play();
         }
     }
 

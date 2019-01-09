@@ -10,6 +10,8 @@ namespace Chaos.Src.Models
         public bool IsDead { get; set; }
         public int Points { get; set; }
 
-        public List<Spell> Spells;
+        public List<Creature> Creatures = new List<Creature>();
+        public List<Spell> Spells = new List<Spell>();
+        public Spell SelectedSpell;
     }
 }

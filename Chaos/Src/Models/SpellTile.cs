@@ -16,7 +16,7 @@ namespace Chaos.Src.Models
 
         public Texture2D Texture
         {
-            get { return StaticManager.ContentManager.Load<Texture2D>(Name); }
+            get { return StaticManager.ContentManager.Load<Texture2D>($"Spells/{Name.Replace(" ", string.Empty)}"); }
         }
 
         public Spell Spell { get; set; }

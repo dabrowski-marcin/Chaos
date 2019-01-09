@@ -2,6 +2,7 @@
 using Chaos.Src.Models;
 using Microsoft.Xna.Framework;
 using System;
+using Chaos.Src.Engine.Handlers;
 
 namespace Chaos.Models
 {
@@ -44,9 +45,10 @@ namespace Chaos.Models
             var pos = new Point(randX, randY);
             _tileset[pos.X, pos.Y].Occupant = new Creature
             {
-                Name = $"Pegasus",
+                Name = "Wizard1",
                 CurrentMovement = 2,
-                Owner = PhaseHandler.ActivePlayers[id]
+                MaxMovement = 2,
+                Owner = StateGlobals.Players[0]
             };
 
         }
@@ -64,8 +66,8 @@ namespace Chaos.Models
             var endX = end.X / 48;
             var endY = end.Y / 48;
 
-            _tileset[endX, endY].Occupant = _tileset[startX, startY].Occupant;
-            _tileset[startX, startY].Occupant = null;
+            _tileset[endX, endY].Update(_tileset[startX, startY].Occupant);
+            _tileset[startX, startY].Update(null);
         }
 
         public Tile GetTile(Point pt)

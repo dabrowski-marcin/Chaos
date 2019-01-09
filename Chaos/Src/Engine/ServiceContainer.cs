@@ -19,6 +19,8 @@ namespace Chaos.Src.Engine
             builder.RegisterType<GameEventHandler>().As<IGameEventHandler>().SingleInstance();
             builder.RegisterType<GameboardHandler>().As<IGameboardHandler>().SingleInstance();
             builder.RegisterType<ButtonsHandler>().As<IButtonsHandler>().SingleInstance();
+            builder.RegisterType<InfoStringHandler>().As<IInfoStringHandler>().SingleInstance();
+            builder.RegisterType<SpellboardHandler>().As<ISpellboardHandler>().SingleInstance();
 
             Container = builder.Build();
         }

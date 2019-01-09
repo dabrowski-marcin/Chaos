@@ -2,6 +2,7 @@
 {
     public enum Phase
     {
+        SpellPicking,
         Spellcasting,
         Movement,
         Independent
